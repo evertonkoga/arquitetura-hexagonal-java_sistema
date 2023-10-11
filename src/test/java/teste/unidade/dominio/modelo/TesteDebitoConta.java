@@ -52,4 +52,15 @@ public class TesteDebitoConta {
             System.out.println(e.getMessage());
         }
     }
+    @Test
+    @DisplayName("valor débito acima do saldo")
+    void teste4() {
+        try {
+            contaValida.debitar(cem.add(BigDecimal.ONE));
+            fail("valor débito acima do saldo");
+        } catch (NegocioException e) {
+            assertEquals(e.getMessage(), "Saldo insuficiente.");
+            System.out.println(e.getMessage());
+        }
+    }
 }
