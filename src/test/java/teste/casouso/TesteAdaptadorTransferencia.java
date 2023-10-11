@@ -100,4 +100,15 @@ public class TesteAdaptadorTransferencia {
             System.out.println(e.getMessage());
         }
     }
+    @Test
+    @DisplayName("conta crédito inexistente")
+    void teste8() {
+        try {
+            porta.transferir(contaDebito, contaInexistente, valorTransferencia);
+            fail("Conta crédito inexistente");
+        } catch (NegocioException e) {
+            assertEquals(e.getMessage(), "Conta crédito é inexistente.");
+            System.out.println(e.getMessage());
+        }
+    }
 }
