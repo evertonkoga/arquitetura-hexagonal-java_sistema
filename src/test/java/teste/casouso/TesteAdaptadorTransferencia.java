@@ -8,6 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import javax.inject.Inject;
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Caso de Uso - Serviço de Transferência")
@@ -17,6 +19,7 @@ public class TesteAdaptadorTransferencia {
 
     Integer contaCredito = 10;
     Integer contaInexistente = 30;
+    BigDecimal valorTransferencia = new BigDecimal(50);
 
     @Inject
     PortaTransferencia porta;
@@ -52,4 +55,16 @@ public class TesteAdaptadorTransferencia {
             fail("Deva carregar uma conta existente.");
         }
     }
+    @Test
+    @DisplayName("conta crédito como obrigatório")
+    void teste4() {
+        try {
+            porta.transferir(null, contaCredito, valorTransferencia);
+            fail("Conta débito é obrigatório");
+        } catch (NegocioException e) {
+            assertEquals(e.getMessage(), "Conta débito é obrigatório.");
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
