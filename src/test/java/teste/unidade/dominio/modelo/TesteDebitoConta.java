@@ -30,4 +30,15 @@ public class TesteDebitoConta {
             System.out.println(e.getMessage());
         }
     }
+    @Test
+    @DisplayName("valor débito negatico como obrigatório")
+    void teste2() {
+        try {
+            contaValida.debitar(new BigDecimal(-10));
+            fail("valor débito obrigatório");
+        } catch (NegocioException e) {
+            assertEquals(e.getMessage(), "Valor débito é obrigatório.");
+            System.out.println(e.getMessage());
+        }
+    }
 }
