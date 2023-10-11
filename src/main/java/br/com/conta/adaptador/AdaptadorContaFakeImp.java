@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import static java.util.Objects.isNull;
 
-
-// Responsável por implementar a porta de saída (driven) de serviços de banco de dados falso.
+// Responsável por implementar a porta de saída (driven) de serviços de banco de dadosfalso.
 // será gerenciado pelo IoC
 @Named
 public class AdaptadorContaFakeImp implements ContaRepositorio {
@@ -20,13 +19,19 @@ public class AdaptadorContaFakeImp implements ContaRepositorio {
         banco.put(10, new Conta(10, new BigDecimal(100), "Everton Fake"));
         banco.put(20, new Conta(20, new BigDecimal(100), "Koga Fake"));
     }
-    @Override
+
     public Conta get(Integer numero) {
-        return null;
+        System.out.println("Fake banco de dados -> Conta get(numero)");
+        return banco.get(numero);
     }
-
-    @Override
     public void alterar(Conta conta) {
+        System.out.println("Fake banco de dados -> alterar(conta)");
 
+        var ct = banco.get(conta.getNumero());
+        if (isNull(ct)) {
+            throw new NegocioException("Conta inexistente: " + conta.getNumero());
+        }
+
+        banco.put(conta.getNumero(), conta);
     }
 }
