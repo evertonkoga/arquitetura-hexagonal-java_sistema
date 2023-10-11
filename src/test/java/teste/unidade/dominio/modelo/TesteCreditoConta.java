@@ -53,4 +53,15 @@ public class TesteCreditoConta {
             System.out.println(e.getMessage());
         }
     }
+    @Test
+    @DisplayName("valor crédito acima de zero")
+    void teste4() {
+        try {
+            contaValida.creditar(BigDecimal.ONE);
+            var saldoFinal = cem.add(BigDecimal.ONE);
+            assertEquals(contaValida.getSaldo(), saldoFinal, "Saldo deve bater");
+        } catch (NegocioException e) {
+            fail("Deve creditar com sucesso - " + e.getMessage());
+        }
+    }
 }
