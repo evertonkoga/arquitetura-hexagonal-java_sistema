@@ -63,4 +63,14 @@ public class TesteDebitoConta {
             System.out.println(e.getMessage());
         }
     }
+    @Test
+    @DisplayName("valor débito igual ao saldo")
+    void teste5() {
+        try {
+            contaValida.debitar(cem);
+            assertEquals(contaValida.getSaldo(), BigDecimal.ZERO, "Saldo deve zerar");
+        } catch (NegocioException e) {
+            fail("Deve debitar com sucesso - " + e.getMessage());
+        }
+    }
 }
