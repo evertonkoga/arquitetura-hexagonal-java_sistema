@@ -35,5 +35,15 @@ public class TesteTransferenciaServico {
             System.out.println(e.getMessage());
         }
     }
-
+    @Test
+    @DisplayName("conta debito como obrigatório")
+    void teste2() {
+        try {
+            transferenciaServico.processar(valorTransferencia, null, contaCredito);
+            fail("conta debito obrigatório");
+        } catch (NegocioException e) {
+            assertEquals(e.getMessage(), "Conta débito é obrigatório.");
+            System.out.println(e.getMessage());
+        }
+    }
 }
