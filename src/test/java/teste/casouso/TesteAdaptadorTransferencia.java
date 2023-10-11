@@ -111,4 +111,15 @@ public class TesteAdaptadorTransferencia {
             System.out.println(e.getMessage());
         }
     }
+    @Test
+    @DisplayName("mesma conta débito e crédito")
+    void teste9() {
+        try {
+            porta.transferir(contaDebito, contaDebito, valorTransferencia);
+            fail("Conta crédito e debito deve ser diferentes");
+        } catch (NegocioException e) {
+            assertEquals(e.getMessage(), "Conta débito e crédito devem ser diferentes.");
+            System.out.println(e.getMessage());
+        }
+    }
 }
