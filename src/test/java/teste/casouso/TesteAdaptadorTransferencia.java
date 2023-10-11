@@ -21,6 +21,7 @@ public class TesteAdaptadorTransferencia {
     Integer contaDebito = 20;
     Integer contaInexistente = 30;
     BigDecimal valorTransferencia = new BigDecimal(50);
+    BigDecimal valorSaldoConta = new BigDecimal(100);
 
     @Inject
     PortaTransferencia porta;
@@ -120,6 +121,27 @@ public class TesteAdaptadorTransferencia {
         } catch (NegocioException e) {
             assertEquals(e.getMessage(), "Conta débito e crédito devem ser diferentes.");
             System.out.println(e.getMessage());
+        }
+    }
+    @Test
+    @DisplayName("transferência de 50 reais")
+    void teste10() {
+        try {
+            porta.transferir(contaDebito, contaCredito, valorTransferencia);
+        } catch (NegocioException e) {
+            fail("Não deve gerar erro de transferência - " + e.getMessage());
+        }
+
+        var saldoContaDebitoEsperado = valorSaldoConta.subtract(valorTransferencia);
+        var saldoContaCreditoEsperado = valorSaldoConta.add(valorTransferencia);
+
+        try {
+            var credito = porta.getConta(contaCredito);
+            var debito = porta.getConta(contaDebito);
+            assertEquals(credito.getSaldo(), saldoContaCreditoEsperado, "Saldo crédito deve bater");
+            assertEquals(debito.getSaldo(), saldoContaDebitoEsperado, "Saldo débito deve bater");
+        } catch (NegocioException e) {
+            fail("Não deve gerar erro de validação de saldo - " + e.getMessage());
         }
     }
 }
