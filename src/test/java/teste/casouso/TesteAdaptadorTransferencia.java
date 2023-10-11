@@ -78,4 +78,16 @@ public class TesteAdaptadorTransferencia {
             System.out.println(e.getMessage());
         }
     }
+    @Test
+    @DisplayName("valor como obrigatório")
+    void teste6() {
+        try {
+            porta.transferir(contaDebito, contaCredito, null);
+            fail("Valor é obrigatório");
+        } catch (NegocioException e) {
+            assertEquals(e.getMessage(), "Valor é obrigatório.");
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
