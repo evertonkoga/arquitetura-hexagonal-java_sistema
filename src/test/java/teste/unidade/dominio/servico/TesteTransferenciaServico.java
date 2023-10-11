@@ -57,4 +57,20 @@ public class TesteTransferenciaServico {
             System.out.println(e.getMessage());
         }
     }
+    @Test
+    @DisplayName("transferir 20 reais")
+    void teste4() {
+        var saldoContaDebitoEsperado = valorSaldoConta.subtract(valorTransferencia);
+        var saldoContaCreditoEsperado = valorSaldoConta.add(valorTransferencia);
+
+        try {
+            transferenciaServico.processar(valorTransferencia, contaDebito, contaCredito);
+            assertEquals(contaDebito.getSaldo(), saldoContaDebitoEsperado,
+                    "Saldo da conta débito deve bater");
+            assertEquals(contaCredito.getSaldo(), saldoContaCreditoEsperado,
+                    "Saldo da conta crédito deve bater");
+        } catch (NegocioException e) {
+            fail("Deve transferir com sucesso");
+        }
+    }
 }
