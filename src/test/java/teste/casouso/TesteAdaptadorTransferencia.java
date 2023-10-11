@@ -14,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = Build1.class)
 public class TesteAdaptadorTransferencia {
+
+    Integer contaInexistente = 30;
+
     @Inject
     PortaTransferencia porta;
 
@@ -22,6 +25,16 @@ public class TesteAdaptadorTransferencia {
     void teste1() {
         try {
             var conta = porta.getConta(null);
+            assertTrue(conta == null, "Conta deve ser nula");
+        } catch (NegocioException e) {
+            fail("Deva carregar uma conta nula.");
+        }
+    }
+    @Test
+    @DisplayName("pesquisa conta com número inexistente")
+    void teste2() {
+        try {
+            var conta = porta.getConta(contaInexistente);
             assertTrue(conta == null, "Conta deve ser nula");
         } catch (NegocioException e) {
             fail("Deva carregar uma conta nula.");
