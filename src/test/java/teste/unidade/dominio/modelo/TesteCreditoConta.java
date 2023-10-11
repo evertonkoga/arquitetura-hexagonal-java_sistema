@@ -42,5 +42,15 @@ public class TesteCreditoConta {
             System.out.println(e.getMessage());
         }
     }
-
+    @Test
+    @DisplayName("valor crédito zero como obrigatório")
+    void teste3() {
+        try {
+            contaValida.creditar(BigDecimal.ZERO);
+            fail("valor crédito obrigatório");
+        } catch (NegocioException e) {
+            assertEquals(e.getMessage(), "Valor crédito é obrigatório.");
+            System.out.println(e.getMessage());
+        }
+    }
 }
