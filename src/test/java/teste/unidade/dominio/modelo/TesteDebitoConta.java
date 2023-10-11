@@ -73,4 +73,15 @@ public class TesteDebitoConta {
             fail("Deve debitar com sucesso - " + e.getMessage());
         }
     }
+    @Test
+    @DisplayName("valor débito menor que saldo")
+    void teste6() {
+        try {
+            contaValida.debitar(BigDecimal.TEN);
+            var saldoFinal = cem.subtract(BigDecimal.TEN);
+            assertEquals(contaValida.getSaldo(), saldoFinal, "Saldo deve bater");
+        } catch (NegocioException e) {
+            fail("Deve debitar com sucesso - " + e.getMessage());
+        }
+    }
 }
