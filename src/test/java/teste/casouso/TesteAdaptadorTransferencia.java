@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TesteAdaptadorTransferencia {
 
     Integer contaCredito = 10;
+    Integer contaDebito = 20;
     Integer contaInexistente = 30;
     BigDecimal valorTransferencia = new BigDecimal(50);
 
@@ -66,5 +67,15 @@ public class TesteAdaptadorTransferencia {
             System.out.println(e.getMessage());
         }
     }
-
+    @Test
+    @DisplayName("conta débito como obrigatório")
+    void teste5() {
+        try {
+            porta.transferir(contaDebito, null, valorTransferencia);
+            fail("Conta crédito é obrigatório");
+        } catch (NegocioException e) {
+            assertEquals(e.getMessage(), "Conta crédito é obrigatório.");
+            System.out.println(e.getMessage());
+        }
+    }
 }
